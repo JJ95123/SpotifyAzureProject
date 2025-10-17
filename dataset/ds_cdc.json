@@ -1,0 +1,31 @@
+{
+	"name": "ds_cdc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"container": {
+				"type": "string",
+				"defaultValue": "bronze"
+			},
+			"folder": {
+				"type": "string",
+				"defaultValue": "cdc"
+			},
+			"file": {
+				"type": "string",
+				"defaultValue": "cdc.json"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			}
+		},
+		"schema": {}
+	}
+}
