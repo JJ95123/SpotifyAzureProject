@@ -111,7 +111,7 @@
 									"container": "bronze",
 									"folder": "Users",
 									"file": {
-										"value": "@concat{pipeline().parameters.table,\"_\",variables('CurrentTimestamp')}",
+										"value": "@concat(pipeline().parameters.table,'_',variables('CurrentTimestamp'))",
 										"type": "Expression"
 									}
 								}
