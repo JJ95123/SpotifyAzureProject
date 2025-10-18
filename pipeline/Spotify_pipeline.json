@@ -133,6 +133,8 @@
 			{
 				"name": "update_last_cdc",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Max CDC",
@@ -170,6 +172,15 @@
 							"type": "JsonReadSettings"
 						}
 					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
 					"enableStaging": false
 				},
 				"inputs": [
@@ -181,6 +192,12 @@
 							"folder": "cdc",
 							"file": "empty.json"
 						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adls_Parquet1",
+						"type": "DatasetReference"
 					}
 				]
 			},
