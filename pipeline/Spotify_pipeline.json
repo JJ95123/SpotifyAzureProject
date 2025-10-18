@@ -176,7 +176,7 @@
 										"file": "@concat(pipeline().parameters.table,'_',variables('CurrentTimestamp'))"
 									}
 								},
-								"enableLogging": true,
+								"enableLogging": false,
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,
@@ -187,40 +187,11 @@
 					],
 					"ifTrueActivities": [
 						{
-							"name": "Max CDC_copy1",
-							"type": "Script",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"linkedServiceName": {
-								"referenceName": "ls_AzureSqlDatabase1",
-								"type": "LinkedServiceReference"
-							},
-							"typeProperties": {
-								"scripts": [
-									{
-										"type": "Query",
-										"text": {
-											"value": "select max(@{pipeline().parameters.cdc_col}) as cdc from @{pipeline().parameters.schema}.@{pipeline().parameters.table}",
-											"type": "Expression"
-										}
-									}
-								],
-								"scriptBlockExecutionTimeout": "02:00:00"
-							}
-						},
-						{
 							"name": "update_last_cdc",
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Max CDC_copy1",
+									"activity": "Max_CDC",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -288,6 +259,35 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "Max_CDC",
+							"type": "Script",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "ls_AzureSqlDatabase1",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "Select max(@{activity('LookupCDC').output}) as cdc from @{pipeline().parameters.schema}.@{pipeline().parameters.table}",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
 						}
 					]
 				}
