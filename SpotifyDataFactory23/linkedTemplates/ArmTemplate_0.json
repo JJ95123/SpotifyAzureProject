@@ -360,12 +360,12 @@
 								}
 							},
 							"sink": {
-								"type": "ParquetSink",
+								"type": "JsonSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "ParquetWriteSettings"
+									"type": "JsonWriteSettings"
 								}
 							},
 							"enableStaging": false
@@ -383,7 +383,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_adls_Parquet1",
+								"referenceName": "ds_cdc",
 								"type": "DatasetReference",
 								"parameters": {
 									"container": "bronze",
