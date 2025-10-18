@@ -133,8 +133,6 @@
 			{
 				"name": "update_last_cdc",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Max CDC",
@@ -158,7 +156,7 @@
 							{
 								"name": "cdc",
 								"value": {
-									"value": "adada",
+									"value": "@activity('Max CDC').output.resultSets[0].rows[0].cdc",
 									"type": "Expression"
 								}
 							}
@@ -197,7 +195,12 @@
 				"outputs": [
 					{
 						"referenceName": "ds_adls_Parquet1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "bronze",
+							"folder": "cdc",
+							"file": "cdc.json"
+						}
 					}
 				]
 			},
