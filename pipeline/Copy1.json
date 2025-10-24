@@ -318,6 +318,8 @@
 			{
 				"name": "Alert",
 				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEachTable",
