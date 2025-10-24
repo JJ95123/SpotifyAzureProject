@@ -315,7 +315,7 @@
 														"type": "DatasetReference",
 														"parameters": {
 															"container": "bronze",
-															"folder": "cdc",
+															"folder": "@{item().table}_cdc",
 															"file": "cdc.json"
 														}
 													}
@@ -359,6 +359,8 @@
 					{
 						"name": "Alert",
 						"type": "WebActivity",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "ForEachTable",
